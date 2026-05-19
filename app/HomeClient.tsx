@@ -1,0 +1,81 @@
+
+
+"use client";
+
+import React, { Suspense, lazy } from "react";
+import { Box, CircularProgress } from "@mui/material";
+
+import Hero from "@/components/Hero";
+
+
+const Developer = lazy(() => import("@/components/Developer"));
+const Business = lazy(() => import("@/components/Business"));
+const About = lazy(() => import("@/components/About"));
+const Testimonial = lazy(() => import("@/components/Testimonial"));
+const OurWork = lazy(() => import("@/components/OurWork"));
+const Expertise = lazy(() => import("@/components/Expertise"));
+
+// Loading Skeleton
+const SectionLoader = () => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "40vh",
+      backgroundColor: "#050d1a",
+    }}
+  >
+    <CircularProgress
+      size={40}
+      thickness={4}
+      sx={{
+        color: "#3b82f6",
+        "& .MuiCircularProgress-circle": {
+          strokeLinecap: "round",
+        },
+      }}
+    />
+  </Box>
+);
+
+export default function HomeClient() {
+  return (
+    <Box
+      component="main"
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#050d1a",
+        overflowX: "hidden",
+      }}
+    >
+      {/* Hero - Always loaded immediately */}
+      <Hero />
+
+      {/* Lazy loaded sections */}
+      <Suspense fallback={<SectionLoader />}>
+        <Developer />
+      </Suspense>
+
+      <Suspense fallback={<SectionLoader />}>
+        <Business />
+      </Suspense>
+
+      <Suspense fallback={<SectionLoader />}>
+        <About />
+      </Suspense>
+
+      <Suspense fallback={<SectionLoader />}>
+        <Testimonial />
+      </Suspense>
+
+      <Suspense fallback={<SectionLoader />}>
+        <OurWork />
+      </Suspense>
+
+      <Suspense fallback={<SectionLoader />}>
+        <Expertise />
+      </Suspense>
+    </Box>
+  );
+}

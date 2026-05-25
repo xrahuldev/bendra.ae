@@ -6,8 +6,6 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 import "./globals.css";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const poppins = Poppins({
@@ -163,8 +161,6 @@ export default function RootLayout({
               position: "relative",
             }}
           >
-            <Navbar />
-
             <main
               style={{
                 flex: 1,
@@ -174,8 +170,6 @@ export default function RootLayout({
             >
               {children}
             </main>
-
-            <Footer />
 
             <WhatsAppButton />
           </div>

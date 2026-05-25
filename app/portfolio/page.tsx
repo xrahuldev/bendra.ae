@@ -638,8 +638,14 @@ export default function PortfolioPage() {
   };
 
   const handleOpenProject = (project: Project) => {
-    setSelectedProject(project);
-    setModalOpen(true);
+    // Agar project ke paas liveUrl hai, to directly us URL ko naye tab mein open karo
+    if (project.liveUrl) {
+      window.open(project.liveUrl, '_blank');
+    } else {
+      // Nahi to pehle jaisa modal open karo
+      setSelectedProject(project);
+      setModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
@@ -939,7 +945,7 @@ export default function PortfolioPage() {
                           transition: 'all 0.4s ease 0.1s',
                         }}
                       >
-                        View Details <ArrowOutward sx={{ fontSize: 18 }} />
+                        {project.liveUrl ? 'Visit Website' : 'View Details'} <ArrowOutward sx={{ fontSize: 18 }} />
                       </Box>
                     </Box>
                     <Chip
@@ -1462,7 +1468,7 @@ export default function PortfolioPage() {
         </Box>
       </Box>
 
-      {/* ===== PROJECT DETAIL MODAL ===== */}
+      {/* ===== PROJECT DETAIL MODAL (sirf bina liveUrl wale projects ke liye) ===== */}
       <Dialog
         open={modalOpen}
         onClose={handleCloseModal}
@@ -1499,7 +1505,6 @@ export default function PortfolioPage() {
                 <Close />
               </IconButton>
 
-              {/* Modal Header - Web Thumbnail ya Image */}
               <Box
                 sx={{
                   height: { xs: '200px', md: '300px' },
@@ -1507,21 +1512,15 @@ export default function PortfolioPage() {
                   overflow: 'hidden',
                 }}
               >
-                {selectedProject.isWebThumbnail && selectedProject.liveUrl ? (
-                  <Box sx={{ position: 'absolute', inset: 0 }}>
-                    <WebThumbnail url={selectedProject.liveUrl} width={900} height={300} />
-                  </Box>
-                ) : (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundImage: `url(${selectedProject.image})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                )}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: `url(${selectedProject.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
                 <Box
                   sx={{
                     position: 'absolute',
@@ -1707,31 +1706,6 @@ export default function PortfolioPage() {
                 </Box>
 
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  {selectedProject.liveUrl && (
-                    <Button
-                      variant="contained"
-                      endIcon={<OpenInNew />}
-                      component="a"
-                      href={selectedProject.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{
-                        fontFamily: "'Poppins', sans-serif",
-                        background: 'linear-gradient(90deg, #3b82f6, #2563eb)',
-                        color: '#fff',
-                        textTransform: 'none',
-                        fontWeight: 600,
-                        px: 3,
-                        py: 1.2,
-                        borderRadius: '10px',
-                        '&:hover': {
-                          background: 'linear-gradient(90deg, #2563eb, #1d4ed8)',
-                        },
-                      }}
-                    >
-                      View Live Website
-                    </Button>
-                  )}
                   <Button
                     variant="outlined"
                     endIcon={<ArrowForward />}

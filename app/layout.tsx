@@ -6,6 +6,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 import "./globals.css";
 
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const poppins = Poppins({
@@ -57,7 +59,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Bendra Technologies" }],
   creator: "Bendra Technologies",
   publisher: "Bendra Technologies",
-
   applicationName: "Bendra",
 
   robots: {
@@ -113,9 +114,7 @@ export const metadata: Metadata = {
       { url: "/favicon/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
       { url: "/favicon/favicon.ico" },
     ],
-    apple: [
-      { url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: ["/favicon/favicon.ico"],
   },
 
@@ -126,9 +125,11 @@ export const viewport: Viewport = {
   themeColor: "#050d1a",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5, // ✅ 1 se badha ke 5 — accessibility ke liye zoom allow karo
   viewportFit: "cover",
 };
+
+const fontVariables = [poppins.variable, sora.variable, dmSans.variable].join(" ");
 
 export default function RootLayout({
   children,
@@ -136,41 +137,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${poppins.variable} ${sora.variable} ${dmSans.variable}`}
-    >
-      <body
-        className={`${poppins.className} min-h-screen bg-[#050d1a] text-white antialiased`}
-        style={{
-          overflowX: "hidden",
-          scrollBehavior: "smooth",
-          WebkitFontSmoothing: "antialiased",
-          MozOsxFontSmoothing: "grayscale",
-        }}
-      >
+    <html lang="en" suppressHydrationWarning className={fontVariables}>
+      <body className={`${poppins.className} antialiased`}>
         <AppRouterCacheProvider>
           <div
             id="app-root"
-            style={{
-              minHeight: "100vh",
-              display: "flex",
-              flexDirection: "column",
-              overflowX: "hidden",
-              position: "relative",
-            }}
+            className="relative flex min-h-screen flex-col overflow-x-hidden bg-[#050d1a] text-white"
           >
-            <main
-              style={{
-                flex: 1,
-                width: "100%",
-                overflowX: "hidden",
-              }}
-            >
+            <Navbar />
+
+            <main className="w-full flex-1 overflow-x-hidden">
               {children}
             </main>
 
+            <Footer />
             <WhatsAppButton />
           </div>
         </AppRouterCacheProvider>

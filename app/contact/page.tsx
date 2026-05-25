@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Button,
@@ -25,7 +25,6 @@ import {
   LinkedIn,
   Facebook,
   Instagram,
-  Twitter,
   WhatsApp,
   AccessTime,
   CheckCircle,
@@ -34,9 +33,14 @@ import {
   Business as BusinessIcon,
   Subject,
   Message,
+  YouTube,
 } from '@mui/icons-material';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface FormData {
   name: string;
@@ -52,6 +56,13 @@ interface FormErrors {
 }
 
 export default function Contact() {
+  const pageRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const formSectionRef = useRef<HTMLDivElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -68,34 +79,188 @@ export default function Contact() {
     severity: 'success' as 'success' | 'error',
   });
 
+  // GSAP Animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header Animation
+      if (headerRef.current) {
+        const headerEls = headerRef.current.children;
+        gsap.fromTo(
+          headerEls,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Contact Cards Animation
+      const cards = gsap.utils.toArray('.contact-card');
+      if (cards.length) {
+        gsap.fromTo(
+          cards,
+          { y: 50, opacity: 0, scale: 0.9 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'back.out(1.4)',
+            scrollTrigger: {
+              trigger: cardsRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Form Section Animation
+      if (formSectionRef.current) {
+        gsap.fromTo(
+          formSectionRef.current,
+          { x: -60, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: formSectionRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Sidebar Items Animation
+      const sidebarItems = gsap.utils.toArray('.sidebar-item');
+      if (sidebarItems.length) {
+        gsap.fromTo(
+          sidebarItems,
+          { x: 60, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sidebarRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Why Choose Us Checkmarks Animation
+      const checkItems = gsap.utils.toArray('.check-item');
+      if (checkItems.length) {
+        gsap.fromTo(
+          checkItems,
+          { x: -20, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: checkItems[0] as Element,
+              start: 'top 90%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Social Icons Animation
+      const socialIcons = gsap.utils.toArray('.social-btn');
+      if (socialIcons.length) {
+        gsap.fromTo(
+          socialIcons,
+          { scale: 0, rotation: -90, opacity: 0 },
+          {
+            scale: 1,
+            rotation: 0,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: 'back.out(1.8)',
+            scrollTrigger: {
+              trigger: socialIcons[0] as Element,
+              start: 'top 92%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // FAQ Animation
+      const faqItems = gsap.utils.toArray('.faq-item');
+      if (faqItems.length) {
+        gsap.fromTo(
+          faqItems,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: faqRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const contactCards = [
     {
       icon: <Phone />,
       iconBg: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
       title: 'Call Us',
-      info: '+91 7065373705',
-      subInfo: 'Mon-Sat 10am-7pm',
+      info: '+971 50 123 4567',
+      subInfo: 'Sun-Thu 9am-6pm GST',
     },
     {
       icon: <Email />,
       iconBg: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
       title: 'Email Us',
-      info: 'connect@digitalemantra.com',
+      info: 'info@bendra.ae',
       subInfo: 'We reply within 24hrs',
     },
     {
       icon: <LocationOn />,
       iconBg: 'linear-gradient(135deg, #a855f7 0%, #9333ea 100%)',
       title: 'Visit Us',
-      info: 'Bhilwara, Rajasthan',
-      subInfo: '8 S 1 & 2, 2nd Floor, Above Vardhman Spuntex, Basant Vihar',
+      info: 'Al Qouz Third, Dubai',
+      subInfo: 'RNA Resources Building, 104-0',
     },
     {
       icon: <AccessTime />,
       iconBg: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
       title: 'Working Hours',
-      info: 'Mon - Sat',
-      subInfo: '10:00 AM - 7:00 PM',
+      info: 'Sun - Thu',
+      subInfo: '9:00 AM - 6:00 PM GST',
     },
   ];
 
@@ -105,6 +270,8 @@ export default function Contact() {
     'Website UI/UX Design',
     'Email Marketing',
     'SEO',
+    'CRM & Business Automation',
+    'Mobile App Development',
     'Other',
   ];
 
@@ -112,7 +279,7 @@ export default function Contact() {
     {
       question: 'What services does Bendra offer?',
       answer:
-        'Bendra offers a comprehensive range of digital services including Website Development, Social Media Marketing, Website UI/UX Design, Email Marketing, and SEO. We help businesses establish a strong online presence and reach their target audience effectively.',
+        'Bendra offers a comprehensive range of digital services including Website Development, Social Media Marketing, Website UI/UX Design, Email Marketing, SEO, CRM & Business Automation, and Mobile App Development. We help businesses establish a strong online presence and reach their target audience effectively.',
     },
     {
       question: 'How long does a typical website project take?',
@@ -132,7 +299,7 @@ export default function Contact() {
     {
       question: 'What social media platforms do you manage?',
       answer:
-        'We manage all major social media platforms including Facebook, Instagram, LinkedIn, Twitter, and WhatsApp Business. We create platform-specific content strategies tailored to your brand and target audience.',
+        'We manage all major social media platforms including Facebook, Instagram, LinkedIn, YouTube, and WhatsApp Business. We create platform-specific content strategies tailored to your brand and target audience.',
     },
     {
       question: 'How do you handle project pricing?',
@@ -142,10 +309,42 @@ export default function Contact() {
   ];
 
   const socialLinks = [
-    { icon: <Facebook />, color: '#1877f2', href: '#' },
-    { icon: <Instagram />, color: '#e4405f', href: '#' },
-    { icon: <LinkedIn />, color: '#0077b5', href: '#' },
-    { icon: <WhatsApp />, color: '#25d366', href: '#' },
+    {
+      icon: <Facebook />,
+      color: '#1877f2',
+      href: 'https://www.facebook.com/bendra.ae',
+      label: 'Facebook',
+    },
+    {
+      icon: <Instagram />,
+      color: '#e4405f',
+      href: 'https://www.instagram.com/bendra.ae/',
+      label: 'Instagram',
+    },
+    {
+      icon: <LinkedIn />,
+      color: '#0077b5',
+      href: 'https://www.linkedin.com/company/bendra-ae',
+      label: 'LinkedIn',
+    },
+    {
+      icon: <YouTube />,
+      color: '#FF0000',
+      href: 'https://www.youtube.com/@Bendra-ae',
+      label: 'YouTube',
+    },
+    {
+      icon: <WhatsApp />,
+      color: '#25d366',
+      href: 'https://wa.me/971501234567',
+      label: 'WhatsApp',
+    },
+    {
+      icon: <Email />,
+      color: '#3b82f6',
+      href: 'mailto:info@bendra.ae',
+      label: 'Email',
+    },
   ];
 
   const validateForm = (): boolean => {
@@ -177,11 +376,11 @@ export default function Contact() {
     if (!validateForm()) return;
     setLoading(true);
     try {
+      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
       setSnackbar({
         open: true,
-        message:
-          '🎉 Message sent successfully! We will get back to you soon.',
+        message: '🎉 Message sent successfully! We will get back to you soon.',
         severity: 'success',
       });
       setFormData({
@@ -265,6 +464,7 @@ export default function Contact() {
     <>
       <Navbar />
       <Box
+        ref={pageRef}
         sx={{
           backgroundColor: '#050d1a',
           fontFamily: "'Poppins', sans-serif",
@@ -319,7 +519,10 @@ export default function Contact() {
           sx={{ px: { xs: 3, md: 6 }, position: 'relative', zIndex: 1 }}
         >
           {/* ===== HEADER ===== */}
-          <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 }, pt: { xs: 8, md: 10 } }}>
+          <Box
+            ref={headerRef}
+            sx={{ textAlign: 'center', mb: { xs: 6, md: 8 }, pt: { xs: 8, md: 10 } }}
+          >
             <Typography
               sx={{
                 fontFamily: "'Poppins', sans-serif",
@@ -375,6 +578,7 @@ export default function Contact() {
 
           {/* ===== CONTACT CARDS ===== */}
           <Box
+            ref={cardsRef}
             sx={{
               display: 'grid',
               gridTemplateColumns: {
@@ -389,6 +593,7 @@ export default function Contact() {
             {contactCards.map((card, i) => (
               <Box
                 key={i}
+                className="contact-card"
                 sx={{
                   background:
                     'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
@@ -471,6 +676,7 @@ export default function Contact() {
           >
             {/* CONTACT FORM */}
             <Box
+              ref={formSectionRef}
               sx={{
                 background:
                   'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
@@ -505,13 +711,11 @@ export default function Contact() {
               </Typography>
 
               <form onSubmit={handleSubmit} noValidate>
-                {/* Row 1 — Name + Email */}
                 <Box
                   sx={{
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
                     gap: 2.5,
-                    mb: 0,
                   }}
                 >
                   {renderTextField(
@@ -526,13 +730,11 @@ export default function Contact() {
                   )}
                 </Box>
 
-                {/* Row 2 — Phone + Company */}
                 <Box
                   sx={{
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
                     gap: 2.5,
-                    mb: 0,
                   }}
                 >
                   {renderTextField(
@@ -547,7 +749,6 @@ export default function Contact() {
                   )}
                 </Box>
 
-                {/* Service Select */}
                 <TextField
                   fullWidth
                   select
@@ -572,18 +773,15 @@ export default function Contact() {
                               backgroundColor: '#0f1f3d',
                               color: '#fff',
                               borderRadius: '10px',
-                              border:
-                                '1px solid rgba(255,255,255,0.1)',
+                              border: '1px solid rgba(255,255,255,0.1)',
                               '& .MuiMenuItem-root': {
                                 fontFamily: "'Poppins', sans-serif",
                                 fontSize: '0.9rem',
                                 '&:hover': {
-                                  backgroundColor:
-                                    'rgba(59,130,246,0.15)',
+                                  backgroundColor: 'rgba(59,130,246,0.15)',
                                 },
                                 '&.Mui-selected': {
-                                  backgroundColor:
-                                    'rgba(59,130,246,0.25)',
+                                  backgroundColor: 'rgba(59,130,246,0.25)',
                                 },
                               },
                             },
@@ -607,28 +805,21 @@ export default function Contact() {
                   ))}
                 </TextField>
 
-                {/* Message */}
                 {renderTextField(
                   'message',
                   'Your Message *',
-                  <Message
-                    sx={{ color: 'rgba(255,255,255,0.5)', mt: 1 }}
-                  />,
+                  <Message sx={{ color: 'rgba(255,255,255,0.5)', mt: 1 }} />,
                   true,
                   5
                 )}
 
-                {/* Submit */}
                 <Button
                   type="submit"
                   fullWidth
                   disabled={loading}
                   endIcon={
                     loading ? (
-                      <CircularProgress
-                        size={20}
-                        sx={{ color: '#fff' }}
-                      />
+                      <CircularProgress size={20} sx={{ color: '#fff' }} />
                     ) : (
                       <Send />
                     )
@@ -663,9 +854,13 @@ export default function Contact() {
             </Box>
 
             {/* SIDEBAR */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box
+              ref={sidebarRef}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
+            >
               {/* Why Choose Us */}
               <Box
+                className="sidebar-item"
                 sx={{
                   background:
                     'linear-gradient(135deg, #1a2f5c 0%, #0f1f3d 100%)',
@@ -712,6 +907,7 @@ export default function Contact() {
                 ].map((f, i) => (
                   <Box
                     key={i}
+                    className="check-item"
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
@@ -736,8 +932,9 @@ export default function Contact() {
                 ))}
               </Box>
 
-              {/* Map - Bhilwara, Rajasthan */}
+              {/* Map - Dubai Al Qouz */}
               <Box
+                className="sidebar-item"
                 sx={{
                   borderRadius: '20px',
                   overflow: 'hidden',
@@ -746,7 +943,7 @@ export default function Contact() {
                 }}
               >
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57855.49736349491!2d74.58977505!3d25.34772905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3968fd90c39b9b51%3A0x50b39dfb98a07b9!2sBhilwara%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3611.5!2d55.2272!3d25.1567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6b5402c126e3%3A0xb9511e6b98427ca1!2sAl%20Quoz%20Industrial%20Area%203%20-%20Dubai!5e0!3m2!1sen!2sae!4v1700000000000!5m2!1sen!2sae"
                   width="100%"
                   height="100%"
                   style={{
@@ -755,12 +952,13 @@ export default function Contact() {
                       'invert(90%) hue-rotate(180deg) brightness(95%) contrast(85%)',
                   }}
                   loading="lazy"
-                  title="Bendra Location - Bhilwara, Rajasthan"
+                  title="Bendra Location - Al Qouz, Dubai"
                 />
               </Box>
 
-              {/* Address Details */}
+              {/* Address Details - Dubai */}
               <Box
+                className="sidebar-item"
                 sx={{
                   background:
                     'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
@@ -778,20 +976,32 @@ export default function Contact() {
                     mb: 2,
                   }}
                 >
-                  📍 Our Office
+                  📍 Our Office — Dubai
                 </Typography>
                 {[
                   {
-                    icon: <LocationOn sx={{ color: '#3b82f6', fontSize: 18, flexShrink: 0 }} />,
-                    text: '8 S 1 & 2, 2nd Floor, Above Vardhman Spuntex, Basant Vihar, Bhilwara 311001',
+                    icon: (
+                      <LocationOn
+                        sx={{ color: '#3b82f6', fontSize: 18, flexShrink: 0 }}
+                      />
+                    ),
+                    text: 'RNA Resources Building, Al Qouz Third 104-0, Dubai, UAE',
                   },
                   {
-                    icon: <Phone sx={{ color: '#10b981', fontSize: 18, flexShrink: 0 }} />,
-                    text: '+91 7065373705',
+                    icon: (
+                      <Phone
+                        sx={{ color: '#10b981', fontSize: 18, flexShrink: 0 }}
+                      />
+                    ),
+                    text: '+971 50 123 4567',
                   },
                   {
-                    icon: <Email sx={{ color: '#a855f7', fontSize: 18, flexShrink: 0 }} />,
-                    text: 'connect@digitalemantra.com',
+                    icon: (
+                      <Email
+                        sx={{ color: '#a855f7', fontSize: 18, flexShrink: 0 }}
+                      />
+                    ),
+                    text: 'info@bendra.ae',
                   },
                 ].map((item, i) => (
                   <Box
@@ -820,6 +1030,7 @@ export default function Contact() {
 
               {/* Social Links */}
               <Box
+                className="sidebar-item"
                 sx={{
                   background:
                     'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
@@ -855,15 +1066,18 @@ export default function Contact() {
                     display: 'flex',
                     gap: 1.5,
                     justifyContent: 'center',
+                    flexWrap: 'wrap',
                   }}
                 >
                   {socialLinks.map((s, i) => (
                     <IconButton
                       key={i}
+                      className="social-btn"
                       component="a"
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={s.label}
                       sx={{
                         width: 44,
                         height: 44,
@@ -888,7 +1102,7 @@ export default function Contact() {
           </Box>
 
           {/* ===== FAQ SECTION ===== */}
-          <Box sx={{ maxWidth: '900px', mx: 'auto', mb: 4 }}>
+          <Box ref={faqRef} sx={{ maxWidth: '900px', mx: 'auto', mb: 4 }}>
             <Box sx={{ textAlign: 'center', mb: 5 }}>
               <Typography
                 sx={{
@@ -932,6 +1146,7 @@ export default function Contact() {
             {faqs.map((faq, i) => (
               <Accordion
                 key={i}
+                className="faq-item"
                 disableGutters
                 elevation={0}
                 sx={{
@@ -951,9 +1166,7 @@ export default function Contact() {
                 }}
               >
                 <AccordionSummary
-                  expandIcon={
-                    <ExpandMore sx={{ color: '#3b82f6' }} />
-                  }
+                  expandIcon={<ExpandMore sx={{ color: '#3b82f6' }} />}
                   sx={{
                     px: 3,
                     py: 0.5,
@@ -989,15 +1202,11 @@ export default function Contact() {
         <Snackbar
           open={snackbar.open}
           autoHideDuration={5000}
-          onClose={() =>
-            setSnackbar((prev) => ({ ...prev, open: false }))
-          }
+          onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         >
           <Alert
-            onClose={() =>
-              setSnackbar((prev) => ({ ...prev, open: false }))
-            }
+            onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
             severity={snackbar.severity}
             variant="filled"
             sx={{

@@ -47,6 +47,27 @@ const PdfThumbnail = dynamic(() => import('@/components/PdfThumbnail'), {
   ),
 });
 
+const WebThumbnail = dynamic(() => import('@/components/webThumbnail'), {
+  ssr: false,
+  loading: () => (
+    <Box
+      sx={{
+        width: '100%',
+        height: '200px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255,255,255,0.03)',
+        borderRadius: '12px 12px 0 0',
+      }}
+    >
+      <Typography sx={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.8rem' }}>
+        Loading preview...
+      </Typography>
+    </Box>
+  ),
+});
+
 interface Project {
   id: number;
   title: string;
@@ -61,6 +82,8 @@ interface Project {
   year: string;
   features: string[];
   results: string[];
+  liveUrl?: string;
+  isWebThumbnail?: boolean;
 }
 
 export default function PortfolioPage() {
@@ -71,6 +94,7 @@ export default function PortfolioPage() {
   const categories: string[] = [
     'All',
     'WordPress',
+    'WooCommerce',
     'LinkedIn',
     'Podcast',
     'Marketing',
@@ -454,6 +478,139 @@ export default function PortfolioPage() {
         'Growing user base steadily',
       ],
     },
+    // ===== WOOCOMMERCE PROJECTS =====
+    {
+      id: 13,
+      title: 'Goshopia - Online Shopping UAE',
+      subtitle: 'WooCommerce E-Commerce',
+      description:
+        'A comprehensive WooCommerce e-commerce platform for Goshopia, offering a seamless online shopping experience in the UAE.',
+      fullDescription:
+        'We developed a full-featured WooCommerce e-commerce platform for Goshopia, a UAE-based online shopping destination. The project included custom theme development, payment gateway integration, product management system, and complete e-commerce optimization for the UAE market.',
+      category: 'WooCommerce',
+      tags: ['WooCommerce', 'E-Commerce', 'UAE', 'Online Shopping'],
+      image: '',
+      client: 'Goshopia',
+      duration: '3 Months',
+      year: '2024',
+      liveUrl: 'https://goshopia.com/',
+      isWebThumbnail: true,
+      features: [
+        'WooCommerce Platform Development',
+        'Custom Theme Design',
+        'UAE Payment Gateway Integration',
+        'Product Management System',
+        'Order Tracking System',
+        'Multi-language Support',
+        'Mobile Responsive Design',
+        'SEO Optimization',
+      ],
+      results: [
+        'Full-featured e-commerce platform launched',
+        'Seamless shopping experience for UAE customers',
+        'Increased online sales and conversions',
+        'Strong market presence in UAE e-commerce',
+      ],
+    },
+    {
+      id: 14,
+      title: 'Akke Knitwear - Premium Knitwear',
+      subtitle: 'WooCommerce E-Commerce',
+      description:
+        'A stylish WooCommerce e-commerce website for Akke Knitwear showcasing and selling premium knitwear products online.',
+      fullDescription:
+        'We created a visually appealing WooCommerce e-commerce website for Akke Knitwear to showcase their premium knitwear collection. The platform features a clean, modern design with smooth product browsing, easy checkout, and complete inventory management system.',
+      category: 'WooCommerce',
+      tags: ['WooCommerce', 'E-Commerce', 'Knitwear', 'Fashion'],
+      image: '',
+      client: 'Akke Knitwear',
+      duration: '2 Months',
+      year: '2024',
+      liveUrl: 'https://akkeknitwear.com/',
+      isWebThumbnail: true,
+      features: [
+        'WooCommerce Store Setup',
+        'Premium Product Showcase',
+        'Custom Product Categories',
+        'Size & Color Variations',
+        'Secure Checkout System',
+        'Inventory Management',
+        'Newsletter Integration',
+        'Social Media Integration',
+      ],
+      results: [
+        'Beautiful online store launched',
+        'Enhanced product visibility',
+        'Streamlined order management',
+        'Growing online customer base',
+      ],
+    },
+    {
+      id: 15,
+      title: 'Gentle Wench - Women Fashion',
+      subtitle: 'WooCommerce E-Commerce',
+      description:
+        'A modern WooCommerce fashion e-commerce website for Gentle Wench offering trendy women clothing and accessories.',
+      fullDescription:
+        'We developed a modern and elegant WooCommerce e-commerce platform for Gentle Wench, a women fashion brand. The website features a sophisticated design with easy navigation, product filtering, wishlist functionality, and a seamless shopping experience tailored for fashion-conscious customers.',
+      category: 'WooCommerce',
+      tags: ['WooCommerce', 'E-Commerce', 'Fashion', 'Women Clothing'],
+      image: '',
+      client: 'Gentle Wench',
+      duration: '2.5 Months',
+      year: '2024',
+      liveUrl: 'https://www.gentlewench.com/',
+      isWebThumbnail: true,
+      features: [
+        'WooCommerce Fashion Store',
+        'Trendy UI/UX Design',
+        'Product Filtering & Search',
+        'Wishlist Functionality',
+        'Size Guide Integration',
+        'Secure Payment Processing',
+        'Order Tracking',
+        'Customer Reviews System',
+      ],
+      results: [
+        'Elegant fashion e-commerce launched',
+        'Improved user shopping experience',
+        'Higher conversion rates achieved',
+        'Strong brand online presence',
+      ],
+    },
+    {
+      id: 16,
+      title: 'Joco Cups - Premium Drinkware',
+      subtitle: 'WooCommerce E-Commerce',
+      description:
+        'A premium WooCommerce e-commerce website for Joco Cups offering high-quality reusable cups and drinkware products.',
+      fullDescription:
+        'We built a premium WooCommerce e-commerce platform for Joco Cups, specializing in high-quality reusable cups and drinkware. The website features a clean, minimalist design that reflects the brand\'s commitment to sustainability and quality, with smooth product browsing and secure checkout.',
+      category: 'WooCommerce',
+      tags: ['WooCommerce', 'E-Commerce', 'Drinkware', 'Sustainable'],
+      image: '',
+      client: 'Joco Cups',
+      duration: '2 Months',
+      year: '2024',
+      liveUrl: 'https://jococups.com/',
+      isWebThumbnail: true,
+      features: [
+        'WooCommerce Store Development',
+        'Minimalist Brand Design',
+        'Product Customization Options',
+        'Bulk Order System',
+        'Subscription Integration',
+        'Eco-friendly Brand Messaging',
+        'Secure Checkout',
+        'Shipping Calculator',
+      ],
+      results: [
+        'Premium drinkware store launched',
+        'Enhanced brand credibility online',
+        'Streamlined ordering process',
+        'Growing customer engagement',
+      ],
+    },
   ];
 
   const stats = [
@@ -470,6 +627,7 @@ export default function PortfolioPage() {
   const getCategoryColor = (category: string): string => {
     const colors: { [key: string]: string } = {
       WordPress: '#21759B',
+      WooCommerce: '#96588a',
       LinkedIn: '#0A66C2',
       Podcast: '#a855f7',
       Marketing: '#f59e0b',
@@ -580,7 +738,7 @@ export default function PortfolioPage() {
                 }}
               >
                 Explore our portfolio of handcrafted masterpiece projects across WordPress,
-                LinkedIn marketing, podcast management, and business solutions.
+                WooCommerce, LinkedIn marketing, podcast management, and business solutions.
               </Typography>
             </Box>
 
@@ -723,22 +881,30 @@ export default function PortfolioPage() {
                   }}
                 >
                   <Box sx={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                    <Box
-                      className="project-image"
-                      sx={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundImage: `url(${project.image})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        transition: 'transform 0.6s ease',
-                      }}
-                    />
+                    {/* Web Thumbnail ya Regular Image */}
+                    {project.isWebThumbnail && project.liveUrl ? (
+                      <Box sx={{ position: 'absolute', inset: 0 }}>
+                        <WebThumbnail url={project.liveUrl} width={400} height={220} />
+                      </Box>
+                    ) : (
+                      <Box
+                        className="project-image"
+                        sx={{
+                          position: 'absolute',
+                          inset: 0,
+                          backgroundImage: `url(${project.image})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          transition: 'transform 0.6s ease',
+                        }}
+                      />
+                    )}
                     <Box
                       sx={{
                         position: 'absolute',
                         inset: 0,
                         background: 'linear-gradient(0deg, rgba(5,13,26,0.7) 0%, transparent 50%)',
+                        pointerEvents: 'none',
                       }}
                     />
                     <Box
@@ -752,6 +918,7 @@ export default function PortfolioPage() {
                         justifyContent: 'center',
                         opacity: 0,
                         transition: 'opacity 0.4s ease',
+                        pointerEvents: 'none',
                       }}
                     >
                       <Box
@@ -789,6 +956,7 @@ export default function PortfolioPage() {
                         color: '#fff',
                         borderRadius: '6px',
                         height: '26px',
+                        zIndex: 5,
                       }}
                     />
                     <Chip
@@ -806,8 +974,28 @@ export default function PortfolioPage() {
                         color: '#fff',
                         borderRadius: '6px',
                         height: '26px',
+                        zIndex: 5,
                       }}
                     />
+                    {project.liveUrl && (
+                      <Chip
+                        label="LIVE"
+                        size="small"
+                        sx={{
+                          position: 'absolute',
+                          bottom: 14,
+                          right: 14,
+                          fontFamily: "'Poppins', sans-serif",
+                          fontWeight: 600,
+                          fontSize: '0.65rem',
+                          backgroundColor: '#10b981',
+                          color: '#fff',
+                          borderRadius: '6px',
+                          height: '22px',
+                          zIndex: 5,
+                        }}
+                      />
+                    )}
                   </Box>
 
                   <Box sx={{ p: 3 }}>
@@ -899,7 +1087,7 @@ export default function PortfolioPage() {
           </Container>
         </Box>
 
-        {/* ===== AMC LETTERS WITH PDF THUMBNAIL ===== */}
+        {/* ===== AMC LETTERS SECTION ===== */}
         <Box sx={{ position: 'relative', zIndex: 1, py: { xs: 6, md: 8 } }}>
           <Container maxWidth="xl" sx={{ px: { xs: 3, md: 6 } }}>
             <Box sx={{ textAlign: 'center', mb: 5 }}>
@@ -979,11 +1167,8 @@ export default function PortfolioPage() {
                     },
                   }}
                 >
-                  {/* PDF Thumbnail */}
                   <Box sx={{ position: 'relative' }}>
                     <PdfThumbnail file={item.file} width={300} />
-
-                    {/* Overlay gradient */}
                     <Box
                       sx={{
                         position: 'absolute',
@@ -995,8 +1180,6 @@ export default function PortfolioPage() {
                         pointerEvents: 'none',
                       }}
                     />
-
-                    {/* PDF Badge */}
                     <Box
                       sx={{
                         position: 'absolute',
@@ -1024,8 +1207,6 @@ export default function PortfolioPage() {
                         PDF
                       </Typography>
                     </Box>
-
-                    {/* Flag Badge */}
                     <Box
                       sx={{
                         position: 'absolute',
@@ -1043,10 +1224,7 @@ export default function PortfolioPage() {
                       </Typography>
                     </Box>
                   </Box>
-
-                  {/* Card Content */}
                   <Box sx={{ p: 3 }}>
-                    {/* Region Name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                       <Typography
                         sx={{
@@ -1090,7 +1268,6 @@ export default function PortfolioPage() {
                         </Typography>
                       </Box>
                     </Box>
-
                     <Typography
                       sx={{
                         fontFamily: "'Poppins', sans-serif",
@@ -1101,7 +1278,6 @@ export default function PortfolioPage() {
                     >
                       {item.label}
                     </Typography>
-
                     <Typography
                       sx={{
                         fontFamily: "'Poppins', sans-serif",
@@ -1113,8 +1289,6 @@ export default function PortfolioPage() {
                     >
                       {item.description}
                     </Typography>
-
-                    {/* Action Buttons */}
                     <Box sx={{ display: 'flex', gap: 1.5 }}>
                       <Button
                         component="a"
@@ -1325,20 +1499,35 @@ export default function PortfolioPage() {
                 <Close />
               </IconButton>
 
+              {/* Modal Header - Web Thumbnail ya Image */}
               <Box
                 sx={{
                   height: { xs: '200px', md: '300px' },
-                  backgroundImage: `url(${selectedProject.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
                   position: 'relative',
+                  overflow: 'hidden',
                 }}
               >
+                {selectedProject.isWebThumbnail && selectedProject.liveUrl ? (
+                  <Box sx={{ position: 'absolute', inset: 0 }}>
+                    <WebThumbnail url={selectedProject.liveUrl} width={900} height={300} />
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundImage: `url(${selectedProject.image})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                )}
                 <Box
                   sx={{
                     position: 'absolute',
                     inset: 0,
                     background: 'linear-gradient(0deg, #0a1628 0%, transparent 60%)',
+                    pointerEvents: 'none',
                   }}
                 />
                 <Box sx={{ position: 'absolute', bottom: 20, left: 24, zIndex: 2 }}>
@@ -1518,25 +1707,31 @@ export default function PortfolioPage() {
                 </Box>
 
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Button
-                    variant="contained"
-                    endIcon={<OpenInNew />}
-                    sx={{
-                      fontFamily: "'Poppins', sans-serif",
-                      background: 'linear-gradient(90deg, #3b82f6, #2563eb)',
-                      color: '#fff',
-                      textTransform: 'none',
-                      fontWeight: 600,
-                      px: 3,
-                      py: 1.2,
-                      borderRadius: '10px',
-                      '&:hover': {
-                        background: 'linear-gradient(90deg, #2563eb, #1d4ed8)',
-                      },
-                    }}
-                  >
-                    Live Preview
-                  </Button>
+                  {selectedProject.liveUrl && (
+                    <Button
+                      variant="contained"
+                      endIcon={<OpenInNew />}
+                      component="a"
+                      href={selectedProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        fontFamily: "'Poppins', sans-serif",
+                        background: 'linear-gradient(90deg, #3b82f6, #2563eb)',
+                        color: '#fff',
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        px: 3,
+                        py: 1.2,
+                        borderRadius: '10px',
+                        '&:hover': {
+                          background: 'linear-gradient(90deg, #2563eb, #1d4ed8)',
+                        },
+                      }}
+                    >
+                      View Live Website
+                    </Button>
+                  )}
                   <Button
                     variant="outlined"
                     endIcon={<ArrowForward />}
